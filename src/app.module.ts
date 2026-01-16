@@ -17,7 +17,7 @@ import { Calendar } from './calendar/entities/calendar.entity';
     port: 5432,
     username: 'admin',
     password: 'supersecret',
-    database: 'todo_app',
+    database: 'campusmanager',
     entities: [Auth, User, Calendar],
     synchronize: true,
   }),
