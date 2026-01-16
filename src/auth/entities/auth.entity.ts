@@ -1,16 +1,1 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-@Entity({ name: 'users' })
-export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-  @Column()
-  name: string;
-  @Column()
-  email: string;
-  @Column()
-  age: number;
-  @Column()
-  isAdmin: boolean;
-}
-
- 
+export class Auth {}
