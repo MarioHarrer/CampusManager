@@ -1,1 +1,28 @@
-<p>edit-todo works!</p>
+<div class="edit-card">
+  <header class="edit-header">
+    <span class="label">Bearbeitungsmodus</span>
+    <h3>Aufgabe editieren</h3>
+  </header>
+
+  <div class="edit-form">
+    <div class="form-group">
+      <label>Titel</label>
+      <input type="text" [(ngModel)]="todo.title" placeholder="Titel eingeben">
+    </div>
+
+    <div class="form-group">
+      <label>Datum</label>
+      <input type="date" [(ngModel)]="todo.date">
+    </div>
+
+    <div class="form-group">
+      <label>Beschreibung</label>
+      <textarea [(ngModel)]="todo.description" rows="5" placeholder="Was ist zu tun?"></textarea>
+    </div>
+  </div>
+
+  <footer class="edit-footer">
+    <button class="btn-cancel" routerLink="/calender">Abbrechen</button>
+    <button class="btn-save" (click)="saveChanges()">Speichern</button>
+  </footer>
+</div>

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-create-todo',
-  imports: [],
+  standalone: true,
+  imports: [RouterLink],
   templateUrl: './create-todo.html',
-  styleUrl: './create-todo.css',
+  styleUrl: './create-todo.css'
 })
-export class CreateTodo {
-
-}
+export class CreateTodoComponent {}

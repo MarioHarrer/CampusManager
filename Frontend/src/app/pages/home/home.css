@@ -1,0 +1,38 @@
+.home-grid {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 30px;
+}
+
+.today-sidebar {
+  background-color: #A69B85; /* Dunkleres Beige aus Figma */
+  color: white;
+  padding: 40px;
+  border-radius: 15px;
+  height: 500px;
+}
+
+.weather-info .temp {
+  font-size: 4rem;
+  display: block;
+  margin: 20px 0;
+}
+
+.todo-previews {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.preview-card {
+  background-color: #C4B9A3; /* Card Farbe */
+  padding: 20px;
+  border-radius: 5px;
+  color: white;
+}
+
+.card-date {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  opacity: 0.8;
+}

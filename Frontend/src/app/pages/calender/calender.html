@@ -1,1 +1,38 @@
-<p>calender works!</p>
+<div class="calendar-page-container">
+  <div class="calendar-main-card">
+
+    <header class="calendar-nav">
+      <div class="month-selector">
+        <button (click)="changeMonth(-1)" class="nav-arrow">&lt;</button>
+        <h2>{{ displayDate | date:'MMM, yyyy' }}</h2>
+        <button (click)="changeMonth(1)" class="nav-arrow">&gt;</button>
+      </div>
+      <button class="add-todo-btn" routerLink="create">Add ToDo</button>
+    </header>
+
+    <div class="weekday-grid">
+      <div *ngFor="let day of weekdays" class="weekday-label">{{ day }}</div>
+    </div>
+
+    <div class="calendar-grid">
+      <div *ngFor="let day of days"
+           class="day-cell"
+           [class.not-current]="!isCurrentMonth(day)"
+           [class.today]="isToday(day)">
+
+        <span class="day-number">{{ day.getDate() }}</span>
+
+        <div class="cell-todos">
+          <div *ngFor="let todo of getTodosForDay(day)"
+               class="todo-pill"
+               [style.border-color]="todo.type"
+               [routerLink]="['edit', 1]"> {{ todo.title }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="side-panel" *ngIf="true"> <router-outlet></router-outlet>
+  </aside>
+</div>

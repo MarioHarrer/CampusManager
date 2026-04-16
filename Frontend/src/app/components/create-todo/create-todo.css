@@ -1,0 +1,50 @@
+.todo-card {
+  background-color: #E6E1D1; /* Gleiche Farbe wie Navbar */
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 0.8rem;
+  margin-bottom: 5px;
+  color: #666;
+}
+
+.input-group input,
+.input-group textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  background: rgba(255,255,255,0.5);
+}
+
+.form-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.btn-cancel {
+  background: #c95d5d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-save {
+  background: #A69B85;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}

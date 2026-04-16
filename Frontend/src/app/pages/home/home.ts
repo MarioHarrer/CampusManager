@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common'; // WICHTIG: Das hier hat gefehlt!
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  standalone: true,
+  // Wir fügen CommonModule hinzu, damit *ngFor funktioniert
+  imports: [CommonModule],
   templateUrl: './home.html',
-  styleUrl: './home.css',
+  styleUrl: './home.css'
 })
-export class Home {
-
-}
+export class HomeComponent {}

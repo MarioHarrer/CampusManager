@@ -2,10 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-football',
-  imports: [],
+  standalone: true,
   templateUrl: './football.html',
-  styleUrl: './football.css',
+  styleUrl: './football.css'
 })
-export class Football {
-
-}
+export class FootballComponent {}
