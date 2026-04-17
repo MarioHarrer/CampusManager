@@ -1,0 +1,18 @@
+<div class="home-grid">
+  <div class="today-sidebar">
+    <h2>Today</h2>
+    <div class="weather-info">
+      <span class="temp">-8°</span>
+      <p>Snowy</p>
+      <p class="location">California, Los Angeles</p>
+    </div>
+  </div>
+
+  <div class="todo-previews">
+    <div class="preview-card" *ngFor="let i of [1,2,3,4]">
+      <span class="card-date">Day, Month</span>
+      <h3>ToDo Title {{i}}</h3>
+      <p>Description for task {{i}}...</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,81 @@
+.edit-card {
+  background-color: #E6E1D1; /* Figma Beige */
+  border-radius: 12px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  min-height: 450px;
+}
+
+.edit-header {
+  text-align: center;
+}
+
+.edit-header .label {
+  font-size: 0.7rem;
+  color: #777;
+  text-transform: uppercase;
+}
+
+.edit-header h3 {
+  margin: 5px 0 0 0;
+  font-weight: 500;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-group label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #555;
+}
+
+input, textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.7);
+  font-family: inherit;
+}
+
+.edit-footer {
+  margin-top: auto;
+  display: flex;
+  gap: 10px;
+}
+
+.btn-cancel {
+  flex: 1;
+  background-color: #c95d5d;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-save {
+  flex: 1;
+  background-color: #A69B85;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-save:hover, .btn-cancel:hover {
+  opacity: 0.9;
+}
