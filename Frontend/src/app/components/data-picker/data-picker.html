@@ -1,1 +1,42 @@
-<p>data-picker works!</p>
+<div class="datepicker-wrap" [class.inline]="inline">
+
+  <!-- Toggle-Button (nur wenn nicht inline) -->
+  <button *ngIf="!inline" class="toggle" (click)="toggle()" type="button">
+    <span>{{ formattedValue }}</span>
+    <span class="chevron" [class.rotated]="isOpen">⌄</span>
+  </button>
+
+  <!-- Popover / Inline-Kalender -->
+  <div class="picker-panel" *ngIf="inline || isOpen">
+    <header class="picker-header">
+      <button class="nav" (click)="changeMonth(-1)" type="button">‹</button>
+      <div class="month-label">{{ viewDate | date:'MMMM yyyy' }}</div>
+      <button class="nav" (click)="changeMonth(1)" type="button">›</button>
+    </header>
+
+    <div class="weekdays">
+      <div *ngFor="let w of weekdays" class="weekday">{{ w }}</div>
+    </div>
+
+    <div class="days-grid">
+      <button
+        *ngFor="let day of days"
+        type="button"
+        class="day"
+        [class.other-month]="!isCurrentMonth(day)"
+        [class.selected]="isSelected(day)"
+        [class.today]="isToday(day)"
+        (click)="selectDay(day)"
+      >
+        {{ day.getDate() }}
+      </button>
+    </div>
+
+    <footer class="picker-footer" *ngIf="!inline">
+      <button class="btn-cancel" (click)="cancel()" type="button">Cancel</button>
+      <button class="btn-confirm" (click)="confirm()" type="button" [disabled]="!value">
+        Choose Date
+      </button>
+    </footer>
+  </div>
+</div>

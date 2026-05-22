@@ -1,38 +1,347 @@
 .home-grid {
   display: grid;
-  grid-template-columns: 350px 1fr;
+  grid-template-columns: 340px 1fr;
   gap: 30px;
+  align-items: start;
 }
 
+/* ---------- Sidebar / Wetter ---------- */
 .today-sidebar {
-  background-color: #A69B85; /* Dunkleres Beige aus Figma */
+  background: linear-gradient(160deg, #A69B85 0%, #8c8068 100%);
   color: white;
+  padding: 35px 30px;
+  border-radius: 16px;
+  min-height: 520px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.today-sidebar h2 {
+  margin: 0 0 30px;
+  font-weight: 500;
+  font-size: 1.6rem;
+  letter-spacing: 0.5px;
+}
+
+.weather-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.weather-icon {
+  font-size: 4.5rem;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.temp {
+  font-size: 4.5rem;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.temp .deg {
+  font-size: 2.5rem;
+  vertical-align: top;
+  margin-left: 2px;
+}
+
+.condition {
+  margin: 8px 0 0;
+  font-size: 1.1rem;
+  opacity: 0.95;
+}
+
+.location {
+  margin: 4px 0 25px;
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+
+.weather-details {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 15px 0;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.weather-details > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.weather-details .label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  opacity: 0.7;
+  letter-spacing: 0.5px;
+}
+
+.weather-details .value {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.updated {
+  margin-top: 20px;
+  font-size: 0.7rem;
+  opacity: 0.6;
+}
+
+.loading {
+  opacity: 0.7;
+  text-align: center;
+  margin-top: 60px;
+}
+
+/* ---------- Main Content ---------- */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 15px;
+}
+
+.section-header h3 {
+  font-weight: 500;
+  color: #333;
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.section-header .link {
+  font-size: 0.85rem;
+  color: #A69B85;
+  text-decoration: none;
+}
+
+.section-header .link:hover {
+  text-decoration: underline;
+}
+
+.section-header .muted {
+  font-size: 0.8rem;
+  color: #999;
+}
+
+/* ---------- Heutige ToDos ---------- */
+.today-list {
+  background: white;
+  border-radius: 12px;
+  padding: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+}
+
+.today-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  transition: background 0.15s ease;
+  border-left: 4px solid transparent;
+}
+
+.today-item[data-type="blue"]   { border-left-color: #4a90e2; }
+.today-item[data-type="orange"] { border-left-color: #f5a623; }
+.today-item[data-type="red"]    { border-left-color: #e25c5c; }
+.today-item[data-type="green"]  { border-left-color: #5cb85c; }
+
+.today-item:hover {
+  background: #faf9f6;
+}
+
+.checkbox-wrap {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.checkbox-wrap input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.checkmark {
+  position: absolute;
+  inset: 0;
+  border: 2px solid #c8c2b0;
+  border-radius: 6px;
+  background: white;
+  transition: all 0.15s ease;
+}
+
+.checkbox-wrap input:checked ~ .checkmark {
+  background: #A69B85;
+  border-color: #A69B85;
+}
+
+.checkbox-wrap input:checked ~ .checkmark::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 11px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.item-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.item-title {
+  font-weight: 500;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.item-desc {
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-time {
+  font-size: 0.85rem;
+  color: #666;
+  font-variant-numeric: tabular-nums;
+  background: #f5f2ea;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.empty-state {
+  background: white;
+  border-radius: 12px;
   padding: 40px;
-  border-radius: 15px;
-  height: 500px;
+  text-align: center;
+  color: #888;
+  font-size: 0.95rem;
 }
 
-.weather-info .temp {
-  font-size: 4rem;
-  display: block;
-  margin: 20px 0;
-}
-
+/* ---------- Preview Cards (Demnächst) ---------- */
 .todo-previews {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 15px;
 }
 
 .preview-card {
-  background-color: #C4B9A3; /* Card Farbe */
-  padding: 20px;
-  border-radius: 5px;
+  background: #C4B9A3;
+  padding: 18px;
+  border-radius: 10px;
   color: white;
+  border-left: 5px solid transparent;
+  transition: transform 0.15s ease;
+}
+
+.preview-card[data-type="blue"]   { border-left-color: #4a90e2; }
+.preview-card[data-type="orange"] { border-left-color: #f5a623; }
+.preview-card[data-type="red"]    { border-left-color: #e25c5c; }
+.preview-card[data-type="green"]  { border-left-color: #5cb85c; }
+
+.preview-card:hover {
+  transform: translateY(-2px);
 }
 
 .card-date {
   font-size: 0.7rem;
   text-transform: uppercase;
-  opacity: 0.8;
+  opacity: 0.85;
+  letter-spacing: 0.5px;
+}
+
+.preview-card h4 {
+  margin: 8px 0 5px;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.preview-card p {
+  margin: 0;
+  font-size: 0.8rem;
+  opacity: 0.85;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---------- Done-Liste ---------- */
+.done-list {
+  background: white;
+  border-radius: 12px;
+  padding: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+}
+
+.done-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: 6px;
+}
+
+.done-item:hover {
+  background: #faf9f6;
+}
+
+.done-title {
+  color: #888;
+  text-decoration: line-through;
+  font-size: 0.9rem;
+}
+
+.done-date {
+  font-size: 0.75rem;
+  color: #aaa;
+}
+
+.btn-restore, .btn-delete {
+  background: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: all 0.15s ease;
+}
+
+.btn-restore:hover { background: #f0ead8; border-color: #d4c9b0; }
+.btn-delete:hover  { background: #fcebeb; border-color: #e8b8b8; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .home-grid {
+    grid-template-columns: 1fr;
+  }
+  .today-sidebar {
+    min-height: auto;
+  }
 }

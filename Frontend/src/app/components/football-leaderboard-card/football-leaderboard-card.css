@@ -1,0 +1,97 @@
+/* Die Komponente rendert <tr> (via attribute selector funktioniert's so besser).
+   Beachte: Styles werden im Kontext der Elterntabelle angewendet. */
+
+:host {
+  display: contents;
+}
+
+.standings-row {
+  transition: background 0.15s ease;
+}
+
+.standings-row:hover {
+  background: #faf9f6;
+}
+
+.standings-row td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #f4f0e4;
+  vertical-align: middle;
+}
+
+.pos {
+  width: 50px;
+}
+
+.pos-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #f5f2ea;
+  color: #666;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.pos-badge[data-pos="1"] { background: #ffd700; color: #5a4a00; }
+.pos-badge[data-pos="2"] { background: #c0c0c0; color: #3c3c3c; }
+.pos-badge[data-pos="3"] { background: #cd7f32; color: white; }
+
+.top-three .team-name {
+  font-weight: 600;
+}
+
+.team-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 140px;
+}
+
+.crest {
+  font-size: 1.3rem;
+}
+
+.team-name {
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.num {
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+  width: 50px;
+}
+
+.pts {
+  color: #333;
+  font-size: 1rem;
+}
+
+.last-five {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding-left: 10px;
+}
+
+.result-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: white;
+}
+
+.result-dot[data-result="W"] { background: #5cb85c; }
+.result-dot[data-result="D"] { background: #f5a623; }
+.result-dot[data-result="L"] { background: #e25c5c; }

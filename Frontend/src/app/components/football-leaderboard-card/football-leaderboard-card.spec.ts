@@ -1,20 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FootballLeaderboardCardComponent } from './football-leaderboard-card';
 
-import { FootballLeaderboardCard } from './football-leaderboard-card';
-
-describe('FootballLeaderboardCard', () => {
-  let component: FootballLeaderboardCard;
-  let fixture: ComponentFixture<FootballLeaderboardCard>;
+describe('FootballLeaderboardCardComponent', () => {
+  let component: FootballLeaderboardCardComponent;
+  let fixture: ComponentFixture<FootballLeaderboardCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FootballLeaderboardCard]
-    })
-    .compileComponents();
+      imports: [FootballLeaderboardCardComponent]
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(FootballLeaderboardCard);
+    fixture = TestBed.createComponent(FootballLeaderboardCardComponent);
     component = fixture.componentInstance;
-    await fixture.whenStable();
   });
 
   it('should create', () => {

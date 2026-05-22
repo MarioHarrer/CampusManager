@@ -1,23 +1,67 @@
 <div class="todo-card">
-  <h3>Add ToDo</h3>
+  <header class="card-header">
+    <h3>Neues ToDo</h3>
+    <button class="close-btn" (click)="cancel()" type="button" title="Schließen">✕</button>
+  </header>
 
-  <div class="input-group">
-    <label>Modul/Name</label>
-    <input type="text" placeholder="Mittwoch, 15. Januar">
+  <div class="form-body">
+    <!-- Titel -->
+    <div class="form-group">
+      <label>Titel *</label>
+      <input
+        type="text"
+        [(ngModel)]="form.title"
+        placeholder="z.B. Mathe-Hausaufgabe"
+        [class.invalid]="submitted && !form.title.trim()"
+      />
+    </div>
+
+    <!-- Datum (Datepicker-Komponente) -->
+    <div class="form-group">
+      <label>Datum *</label>
+      <app-data-picker
+        [value]="form.date"
+        (valueChange)="form.date = $event"
+      ></app-data-picker>
+    </div>
+
+    <!-- Zeit -->
+    <div class="form-group">
+      <label>Uhrzeit</label>
+      <input type="time" [(ngModel)]="form.time" class="time-input" />
+    </div>
+
+    <!-- Kategorie / Type -->
+    <div class="form-group">
+      <label>Kategorie</label>
+      <div class="type-picker">
+        <button
+          *ngFor="let opt of typeOptions"
+          type="button"
+          class="type-chip"
+          [class.active]="form.type === opt.value"
+          [style.--chip-color]="opt.color"
+          (click)="setType(opt.value)"
+        >
+          <span class="dot" [style.background]="opt.color"></span>
+          {{ opt.label }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Beschreibung -->
+    <div class="form-group">
+      <label>Beschreibung</label>
+      <textarea
+        [(ngModel)]="form.description"
+        rows="4"
+        placeholder="Was ist zu tun?"
+      ></textarea>
+    </div>
   </div>
 
-  <div class="input-group">
-    <label>Titel</label>
-    <input type="text" placeholder="Titel">
-  </div>
-
-  <div class="input-group">
-    <label>Beschreibung</label>
-    <textarea rows="5" placeholder="Description"></textarea>
-  </div>
-
-  <div class="form-footer">
-    <button class="btn-cancel" routerLink="/calender">Cancel</button>
-    <button class="btn-save">Add</button>
-  </div>
+  <footer class="card-footer">
+    <button class="btn-cancel" type="button" (click)="cancel()">Abbrechen</button>
+    <button class="btn-save" type="button" (click)="save()">+ Hinzufügen</button>
+  </footer>
 </div>

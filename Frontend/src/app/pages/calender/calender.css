@@ -1,19 +1,24 @@
 .calendar-page-container {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr;
   gap: 30px;
   align-items: start;
+  transition: grid-template-columns 0.25s ease;
+}
+
+.calendar-page-container.with-sidebar {
+  grid-template-columns: 1fr 400px;
 }
 
 .calendar-main-card {
   background: white;
-  border-radius: 8px;
+  border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  padding: 20px;
-  min-width: 800px;
+  padding: 24px;
+  min-width: 0;
 }
 
-/* Navigation */
+/* ---------- Nav ---------- */
 .calendar-nav {
   display: flex;
   justify-content: space-between;
@@ -24,67 +29,118 @@
 .month-selector {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
+}
+
+.month-selector h2 {
+  margin: 0 10px;
+  font-weight: 500;
+  font-size: 1.3rem;
+  color: #333;
+  min-width: 160px;
 }
 
 .nav-arrow {
-  background: none;
+  background: #f5f2ea;
   border: none;
-  font-size: 1.2rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
   cursor: pointer;
-  color: #888;
+  color: #666;
+  font-size: 1.3rem;
+  line-height: 1;
+  transition: background 0.15s ease;
+}
+
+.nav-arrow:hover {
+  background: #ebe6d6;
+}
+
+.btn-today {
+  background: #f5f2ea;
+  color: #666;
+  border: none;
+  padding: 7px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  margin-left: 10px;
+  transition: background 0.15s ease;
+}
+
+.btn-today:hover {
+  background: #ebe6d6;
 }
 
 .add-todo-btn {
-  background-color: #A69B85; /* Dunkles Beige aus Figma */
+  background-color: #A69B85;
   color: white;
   border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
+  padding: 9px 18px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.15s ease;
 }
 
-/* Grid Layout */
+.add-todo-btn:hover {
+  background-color: #8c8068;
+}
+
+/* ---------- Grid ---------- */
 .weekday-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   border-bottom: 1px solid #eee;
   padding-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .weekday-label {
   text-align: center;
   font-size: 0.7rem;
   color: #999;
-  font-weight: bold;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-auto-rows: minmax(100px, auto);
+  grid-auto-rows: minmax(110px, auto);
+  gap: 1px;
+  background: #f0eee9;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-/* Einzelne Zellen */
+/* ---------- Cells ---------- */
 .day-cell {
-  border-right: 1px solid #f0f0f0;
-  border-bottom: 1px solid #f0f0f0;
-  padding: 10px;
+  background: white;
+  padding: 8px;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  min-height: 110px;
 }
 
-.day-cell:nth-child(7n) { border-right: none; }
+.day-cell:hover {
+  background: #fdfcf8;
+}
 
 .day-number {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #444;
+  font-weight: 500;
+  align-self: flex-start;
 }
 
 .not-current {
-  background-color: #fafafa;
+  background: #fafafa;
 }
 
 .not-current .day-number {
@@ -92,37 +148,78 @@
 }
 
 .today {
-  background-color: #fffdf5;
+  background: #fdf9ed;
 }
 
 .today .day-number {
-  font-weight: bold;
-  color: #A69B85;
+  background: #A69B85;
+  color: white;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
 }
 
-/* To-Do Pills im Kalender (wie in image_3.png) */
+/* ---------- ToDo Pills ---------- */
 .cell-todos {
   display: flex;
   flex-direction: column;
   gap: 3px;
+  margin-top: 2px;
 }
 
 .todo-pill {
-  font-size: 0.65rem;
-  padding: 2px 6px;
-  border-left: 3px solid; /* Farbe wird via [style.border-color] gesetzt */
+  font-size: 0.7rem;
+  padding: 3px 7px;
+  border-radius: 4px;
+  border-left: 3px solid;
   background: #fdfdfd;
   cursor: pointer;
-  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  transition: transform 0.1s ease, box-shadow 0.15s ease;
   overflow: hidden;
-  text-overflow: ellipsis;
-  box-shadow: 1px 1px 2px rgba(0,0,0,0.05);
 }
+
+.todo-pill[data-type="blue"]   { border-left-color: #4a90e2; background: #eef5fc; }
+.todo-pill[data-type="orange"] { border-left-color: #f5a623; background: #fdf3e2; }
+.todo-pill[data-type="red"]    { border-left-color: #e25c5c; background: #fbebeb; }
+.todo-pill[data-type="green"]  { border-left-color: #5cb85c; background: #ebf5eb; }
 
 .todo-pill:hover {
-  background: #f0f0f0;
+  transform: translateX(2px);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
 }
 
+.pill-time {
+  font-weight: 600;
+  color: #555;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.65rem;
+  flex-shrink: 0;
+}
+
+.pill-title {
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- Sidebar ---------- */
 .side-panel {
-  width: 380px;
+  min-width: 0;
+  position: sticky;
+  top: 20px;
+}
+
+@media (max-width: 1100px) {
+  .calendar-page-container.with-sidebar {
+    grid-template-columns: 1fr;
+  }
 }

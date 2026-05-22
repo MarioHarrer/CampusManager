@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet, RouterLink } from '@angular/router';
+import { RouterOutlet, RouterLink, Router, NavigationEnd } from '@angular/router';
+import { TodoService } from '../../services/todo.service';
+import { Todo } from '../../services/models';
 
 @Component({
   selector: 'app-calender',
@@ -10,44 +12,48 @@ import { RouterOutlet, RouterLink } from '@angular/router';
   styleUrl: './calender.css'
 })
 export class CalenderComponent implements OnInit {
+  private todoService = inject(TodoService);
+  private router = inject(Router);
+
   displayDate: Date = new Date();
   days: Date[] = [];
   weekdays = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 
-  // Mock-Daten für To-Dos (Später kommen diese aus deinem Backend Service)
-  todos = [
-    { date: new Date(2025, 9, 1), title: 'Quotes', type: 'blue' },
-    { date: new Date(2025, 9, 1), title: 'Homework', type: 'orange' },
-    { date: new Date(2025, 9, 10), title: 'Meeting', type: 'blue' },
-    { date: new Date(2025, 9, 24), title: 'Gym', type: 'red' },
-  ];
+  // Zeigt die rechte Sidebar an, wenn eine Unterroute aktiv ist (create / edit).
+  sidebarOpen = false;
+
+  constructor() {
+    // Beobachtet Router-Änderungen, um zu wissen wann eine Sub-Route (create/edit) aktiv ist.
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        const url = this.router.url;
+        this.sidebarOpen = url.includes('/calender/create') || url.includes('/calender/edit');
+      }
+    });
+  }
 
   ngOnInit() {
     this.generateCalendar();
+    // Initial-Check (falls Seite direkt mit Subroute geladen wird).
+    const url = this.router.url;
+    this.sidebarOpen = url.includes('/calender/create') || url.includes('/calender/edit');
   }
 
   generateCalendar() {
     const year = this.displayDate.getFullYear();
     const month = this.displayDate.getMonth();
 
-    // Erster Tag des Monats
     const firstDayOfMonth = new Date(year, month, 1);
-    // Welcher Wochentag ist der 1. (0=So, 1=Mo...) -> Umrechnen auf Mo=0
     let startDay = firstDayOfMonth.getDay() - 1;
     if (startDay === -1) startDay = 6;
 
     const daysArray: Date[] = [];
-
-    // Tage des Vormonats zum Auffüllen
     for (let i = startDay; i > 0; i--) {
       daysArray.push(new Date(year, month, 1 - i));
     }
-
-    // Tage des aktuellen Monats (max 42 Felder für 6 Wochen)
     for (let i = 0; i < 42 - startDay; i++) {
       daysArray.push(new Date(year, month, 1 + i));
     }
-
     this.days = daysArray;
   }
 
@@ -56,20 +62,41 @@ export class CalenderComponent implements OnInit {
     this.generateCalendar();
   }
 
-  getTodosForDay(day: Date) {
-    return this.todos.filter(t =>
-      t.date.getDate() === day.getDate() &&
-      t.date.getMonth() === day.getMonth() &&
-      t.date.getFullYear() === day.getFullYear()
-    );
+  goToToday() {
+    this.displayDate = new Date();
+    this.generateCalendar();
+  }
+
+  // Gibt die aktiven ToDos für einen Tag zurück (erledigte sind raus).
+  getTodosForDay(day: Date): Todo[] {
+    const iso = this.toIsoDate(day);
+    return this.todoService.activeTodos().filter(t => t.date === iso);
   }
 
   isToday(day: Date): boolean {
-    const today = new Date();
-    return day.toDateString() === today.toDateString();
+    return day.toDateString() === new Date().toDateString();
   }
 
   isCurrentMonth(day: Date): boolean {
     return day.getMonth() === this.displayDate.getMonth();
+  }
+
+  // Klick auf eine Tages-Zelle öffnet das Create-Formular mit vorbelegtem Datum.
+  createForDay(day: Date) {
+    const iso = this.toIsoDate(day);
+    this.router.navigate(['/calender/create'], { queryParams: { date: iso } });
+  }
+
+  // Klick auf ein ToDo-Pill öffnet den Edit-Modus.
+  editTodo(todo: Todo, event: Event) {
+    event.stopPropagation();
+    this.router.navigate(['/calender/edit', todo.id]);
+  }
+
+  private toIsoDate(d: Date): string {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
   }
 }

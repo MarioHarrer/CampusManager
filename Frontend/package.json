@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "generate-openapi": "openapi-generator-cli generate"
   },
   "prettier": {
     "printWidth": 100,
@@ -29,6 +30,7 @@
     "@angular/forms": "^21.1.0",
     "@angular/platform-browser": "^21.1.0",
     "@angular/router": "^21.1.0",
+    "@openapitools/openapi-generator-cli": "^2.34.0",
     "keycloak-angular": "^21.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"

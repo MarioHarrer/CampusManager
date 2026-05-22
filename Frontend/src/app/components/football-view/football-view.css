@@ -1,0 +1,102 @@
+.match-card {
+  background: white;
+  border-radius: 12px;
+  padding: 16px 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border: 1px solid #f0ecdf;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.match-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.match-card.live {
+  border-color: #e25c5c;
+  background: linear-gradient(160deg, #fff 0%, #fef5f5 100%);
+}
+
+.match-card.finished {
+  opacity: 0.92;
+}
+
+.match-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.competition {
+  font-size: 0.7rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.status {
+  font-size: 0.75rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.status.live {
+  color: #e25c5c;
+  background: #fcebeb;
+  padding: 3px 8px;
+  border-radius: 10px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.teams {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+}
+
+.team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.crest {
+  font-size: 1.8rem;
+}
+
+.name {
+  font-size: 0.85rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.score {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #333;
+  font-variant-numeric: tabular-nums;
+}
+
+.score .sep {
+  color: #ccc;
+  font-weight: 400;
+}
+
+.kickoff {
+  font-size: 0.9rem;
+  color: #999;
+  font-weight: 400;
+}

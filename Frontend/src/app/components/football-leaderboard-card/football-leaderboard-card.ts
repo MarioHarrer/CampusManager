@@ -1,11 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Standing } from '../../services/models';
 
+/**
+ * Einzelne Zeile der Standings-Tabelle (eine Zeile = ein Team).
+ */
 @Component({
   selector: 'app-football-leaderboard-card',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './football-leaderboard-card.html',
-  styleUrl: './football-leaderboard-card.css',
+  styleUrl: './football-leaderboard-card.css'
 })
-export class FootballLeaderboardCard {
-
+export class FootballLeaderboardCardComponent {
+  @Input({ required: true }) standing!: Standing;
 }

@@ -1,20 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FootballViewComponent } from './football-view';
 
-import { FootballView } from './football-view';
-
-describe('FootballView', () => {
-  let component: FootballView;
-  let fixture: ComponentFixture<FootballView>;
+describe('FootballViewComponent', () => {
+  let component: FootballViewComponent;
+  let fixture: ComponentFixture<FootballViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FootballView]
-    })
-    .compileComponents();
+      imports: [FootballViewComponent]
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(FootballView);
+    fixture = TestBed.createComponent(FootballViewComponent);
     component = fixture.componentInstance;
-    await fixture.whenStable();
   });
 
   it('should create', () => {

@@ -1,1 +1,23 @@
-<p>football-leaderboard-card works!</p>
+<tr class="standings-row" [class.top-three]="standing.position <= 3">
+  <td class="pos">
+    <span class="pos-badge" [attr.data-pos]="standing.position">{{ standing.position }}</span>
+  </td>
+  <td class="team-cell">
+    <span class="crest">{{ standing.crest }}</span>
+    <span class="team-name">{{ standing.team }}</span>
+  </td>
+  <td class="num">{{ standing.played }}</td>
+  <td class="num">{{ standing.won }}</td>
+  <td class="num">{{ standing.drawn }}</td>
+  <td class="num">{{ standing.lost }}</td>
+  <td class="num">{{ standing.goalDiff > 0 ? '+' + standing.goalDiff : standing.goalDiff }}</td>
+  <td class="num pts"><strong>{{ standing.points }}</strong></td>
+  <td class="last-five">
+    <span
+      *ngFor="let r of standing.lastFive"
+      class="result-dot"
+      [attr.data-result]="r"
+      [title]="r === 'W' ? 'Win' : r === 'D' ? 'Draw' : 'Loss'"
+    >{{ r }}</span>
+  </td>
+</tr>

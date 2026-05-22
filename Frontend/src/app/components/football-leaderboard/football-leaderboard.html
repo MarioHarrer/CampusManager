@@ -1,1 +1,31 @@
-<p>football-leaderboard works!</p>
+<div class="leaderboard">
+  <header class="leaderboard-header">
+    <div class="title">
+      <span class="pl-badge">⚽</span>
+      <h3>{{ title }}</h3>
+    </div>
+    <span class="view-all">View all ›</span>
+  </header>
+
+  <table class="standings-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Club</th>
+        <th>P</th>
+        <th>W</th>
+        <th>D</th>
+        <th>L</th>
+        <th>GD</th>
+        <th>Pts</th>
+        <th class="last-five-head">Last 5</th>
+      </tr>
+    </thead>
+    <tbody>
+      <app-football-leaderboard-card
+        *ngFor="let row of standings"
+        [standing]="row"
+      ></app-football-leaderboard-card>
+    </tbody>
+  </table>
+</div>

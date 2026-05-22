@@ -2,18 +2,26 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import {provideHttpClient} from '@angular/common/http';
+import {provideHttpClient, withInterceptors} from '@angular/common/http';
 import {
   AutoRefreshTokenService,
-  INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG, provideKeycloak, UserActivityService, withAutoRefreshToken
+  INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG,
+  includeBearerTokenInterceptor, provideKeycloak, UserActivityService, withAutoRefreshToken
 } from 'keycloak-angular';
 import {config} from 'rxjs';
+import {BASE_PATH} from './api';
+
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([includeBearerTokenInterceptor])),
+    {
+    provide: BASE_PATH,
+       useValue: 'http://localhost:3000/',
+    },
     provideKeycloak({
       config:{
         url: 'http://localhost:8081/',
