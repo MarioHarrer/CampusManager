@@ -5,11 +5,12 @@ import { FootballComponent } from './pages/football/football';
 // Importiere die Unterkomponenten für den Kalender (aus image_1.png)
 import { CreateTodoComponent } from './components/create-todo/create-todo';
 import { EditTodoComponent } from './components/edit-todo/edit-todo';
+import {authGuard} from './auth-guard';
 
 export const routes: Routes = [
   // Hauptrouten (für die Navbar)
-  { path: 'home', component: HomeComponent },
-  { path: 'football', component: FootballComponent },
+  { path: 'home', component: HomeComponent, canActivate: [authGuard]},
+  { path: 'football', component: FootballComponent , canActivate: [authGuard]},
   {
     path: 'calender',
     component: CalenderComponent,
@@ -18,7 +19,7 @@ export const routes: Routes = [
       // '/calender' zeigt standardmäßig die Kalenderansicht (die in calender.ts definiert ist)
       { path: 'create', component: CreateTodoComponent },
       { path: 'edit/:id', component: EditTodoComponent } // :id ist ein Platzhalter
-    ]
+    ], canActivate: [authGuard]
   },
 
   // Standard- und Catch-All Routen
