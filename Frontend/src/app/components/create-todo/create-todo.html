@@ -3,21 +3,35 @@
 
   <div class="input-group">
     <label>Modul/Name</label>
-    <input type="text" placeholder="Mittwoch, 15. Januar">
+    <input
+      type="text"
+      [(ngModel)]="todo.name"
+      name="name"
+      placeholder="z.B. Mathe-Hausübung"
+    />
   </div>
 
   <div class="input-group">
-    <label>Titel</label>
-    <input type="text" placeholder="Titel">
+    <label>Datum</label>
+    <input type="date" [(ngModel)]="todo.date" name="date" />
   </div>
 
   <div class="input-group">
     <label>Beschreibung</label>
-    <textarea rows="5" placeholder="Description"></textarea>
+    <textarea
+      [(ngModel)]="todo.description"
+      name="description"
+      rows="5"
+      placeholder="Description"
+    ></textarea>
   </div>
+
+  <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
 
   <div class="form-footer">
     <button class="btn-cancel" routerLink="/calender">Cancel</button>
-    <button class="btn-save">Add</button>
+    <button class="btn-save" (click)="save()" [disabled]="saving">
+      {{ saving ? 'Speichert…' : 'Add' }}
+    </button>
   </div>
 </div>

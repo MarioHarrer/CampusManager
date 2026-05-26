@@ -1,53 +1,92 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { TodoService } from '../../services/todo.service';
+import { Todo } from '../../services/todo.model';
 
 @Component({
   selector: 'app-edit-todo',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './edit-todo.html',
-  styleUrl: './edit-todo.css'
+  styleUrl: './edit-todo.css',
 })
 export class EditTodoComponent implements OnInit {
-  // Dieses Objekt hält die Daten, die wir bearbeiten
-  todo: any = {
-    title: '',
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private todoService = inject(TodoService);
+
+  todo: Partial<Todo> = {
+    name: '',
     description: '',
-    date: ''
+    date: '',
   };
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
+  loading = false;
+  saving = false;
+  errorMessage = '';
+  private id: string | null = null;
 
   ngOnInit() {
-    // 1. ID aus der URL holen
-    const id = this.route.snapshot.paramMap.get('id');
+    this.id = this.route.snapshot.paramMap.get('id');
+    if (!this.id) {
+      this.errorMessage = 'Keine ID in der URL.';
+      return;
+    }
 
-    // 2. Daten laden (Hier würdest du normalerweise dein Backend fragen)
-    // Zur Demo laden wir hier Beispieldaten basierend auf der ID
-    this.loadTodo(id);
-  }
-
-  loadTodo(id: string | null) {
-    // Simulation: Wir finden das To-Do (später via Service)
-    console.log('Lade To-Do mit ID:', id);
-    this.todo = {
-      id: id,
-      title: 'Beispiel Aufgabe',
-      description: 'Das ist eine geladene Beschreibung',
-      date: '2025-10-16'
-    };
+    this.loading = true;
+    this.todoService.findOne(this.id).subscribe({
+      next: (todo) => {
+        this.loading = false;
+        // Datum für <input type="date"> auf yyyy-mm-dd kürzen
+        this.todo = {
+          ...todo,
+          date: todo.date ? todo.date.substring(0, 10) : '',
+        };
+      },
+      error: (err) => {
+        this.loading = false;
+        this.errorMessage = 'Todo konnte nicht geladen werden.';
+        console.error(err);
+      },
+    });
   }
 
   saveChanges() {
-    // Hier käme der Speicher-Befehl ans Backend
-    console.log('Speichere Änderungen:', this.todo);
+    if (!this.id) return;
+    this.saving = true;
+    this.errorMessage = '';
 
-    // Nach dem Speichern zurück zum Kalender
-    this.router.navigate(['/calender']);
+    this.todoService
+      .update(this.id, {
+        name: this.todo.name,
+        description: this.todo.description,
+        date: this.todo.date,
+      })
+      .subscribe({
+        next: () => {
+          this.saving = false;
+          this.router.navigate(['/calender']);
+        },
+        error: (err) => {
+          this.saving = false;
+          this.errorMessage = 'Speichern fehlgeschlagen.';
+          console.error(err);
+        },
+      });
+  }
+
+  deleteTodo() {
+    if (!this.id) return;
+    if (!confirm('Dieses Todo wirklich löschen?')) return;
+
+    this.todoService.remove(this.id).subscribe({
+      next: () => this.router.navigate(['/calender']),
+      error: (err) => {
+        this.errorMessage = 'Löschen fehlgeschlagen.';
+        console.error(err);
+      },
+    });
   }
 }

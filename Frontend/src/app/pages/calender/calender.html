@@ -25,14 +25,15 @@
         <div class="cell-todos">
           <div *ngFor="let todo of getTodosForDay(day)"
                class="todo-pill"
-               [style.border-color]="todo.type"
-               [routerLink]="['edit', 1]"> {{ todo.title }}
+               [routerLink]="['edit', todo.id]">
+            {{ todo.name }}
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <aside class="side-panel" *ngIf="true"> <router-outlet></router-outlet>
+  <aside class="side-panel">
+    <router-outlet></router-outlet>
   </aside>
 </div>

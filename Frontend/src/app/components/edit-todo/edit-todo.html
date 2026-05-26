@@ -4,25 +4,42 @@
     <h3>Aufgabe editieren</h3>
   </header>
 
-  <div class="edit-form">
+  <p *ngIf="loading">Lade…</p>
+
+  <div class="edit-form" *ngIf="!loading">
     <div class="form-group">
       <label>Titel</label>
-      <input type="text" [(ngModel)]="todo.title" placeholder="Titel eingeben">
+      <input
+        type="text"
+        [(ngModel)]="todo.name"
+        name="name"
+        placeholder="Titel eingeben"
+      />
     </div>
 
     <div class="form-group">
       <label>Datum</label>
-      <input type="date" [(ngModel)]="todo.date">
+      <input type="date" [(ngModel)]="todo.date" name="date" />
     </div>
 
     <div class="form-group">
       <label>Beschreibung</label>
-      <textarea [(ngModel)]="todo.description" rows="5" placeholder="Was ist zu tun?"></textarea>
+      <textarea
+        [(ngModel)]="todo.description"
+        name="description"
+        rows="5"
+        placeholder="Was ist zu tun?"
+      ></textarea>
     </div>
   </div>
 
+  <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
   <footer class="edit-footer">
     <button class="btn-cancel" routerLink="/calender">Abbrechen</button>
-    <button class="btn-save" (click)="saveChanges()">Speichern</button>
+    <button class="btn-delete" (click)="deleteTodo()">Löschen</button>
+    <button class="btn-save" (click)="saveChanges()" [disabled]="saving">
+      {{ saving ? 'Speichert…' : 'Speichern' }}
+    </button>
   </footer>
 </div>
