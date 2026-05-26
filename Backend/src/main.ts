@@ -14,6 +14,14 @@ async function bootstrap() {
     credentials: true,
   });
 
+  // Cache komplett deaktivieren. Sonst antwortet das Backend bei Folge-
+  // Requests mit "304 Not Modified" und der Browser liefert eine leere
+  // Antwort an Angular (sichtbar als "es kommen keine Daten an").
+  app.use((_req: any, res: any, next: any) => {
+    res.setHeader('Cache-Control', 'no-store');
+    next();
+  });
+
   // Globale Validierung für DTOs (class-validator)
   app.useGlobalPipes(
     new ValidationPipe({
