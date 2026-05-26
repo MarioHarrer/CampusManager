@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import {AppService} from './api';
 
 @Component({
   selector: 'app-root',
@@ -10,4 +11,15 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class App {
   title = 'CampusManager';
+  private appService = inject(AppService);
+
+  ngOnInit() {
+    this.getData();
+  }
+
+  getData() {
+    this.appService.appControllerGetHello().subscribe({next:(value: string) => {
+      console.log(value);
+      }})
+  }
 }
