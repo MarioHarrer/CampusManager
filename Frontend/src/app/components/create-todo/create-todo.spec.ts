@@ -1,20 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CreateTodoComponent } from './create-todo';
 
-import { CreateTodo } from './create-todo';
-
-describe('CreateTodo', () => {
-  let component: CreateTodo;
-  let fixture: ComponentFixture<CreateTodo>;
+describe('CreateTodoComponent', () => {
+  let component: CreateTodoComponent;
+  let fixture: ComponentFixture<CreateTodoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CreateTodo]
-    })
-    .compileComponents();
+      imports: [CreateTodoComponent]
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(CreateTodo);
+    fixture = TestBed.createComponent(CreateTodoComponent);
     component = fixture.componentInstance;
-    await fixture.whenStable();
   });
 
   it('should create', () => {

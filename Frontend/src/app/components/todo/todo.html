@@ -1,1 +1,21 @@
-<p>todo works!</p>
+<div class="todo-item" [attr.data-type]="todo.type" [class.done]="todo.done">
+  <label class="checkbox-wrap">
+    <input type="checkbox" [checked]="todo.done" (change)="onToggle()" />
+    <span class="checkmark"></span>
+  </label>
+
+  <div class="body" (click)="onEdit()">
+    <div class="title">{{ todo.title }}</div>
+    <div class="desc" *ngIf="todo.description">{{ todo.description }}</div>
+  </div>
+
+  <span class="time" *ngIf="showTime && todo.time">{{ todo.time }}</span>
+
+  <button
+    *ngIf="showDelete"
+    type="button"
+    class="delete-btn"
+    (click)="onDelete($event)"
+    title="Löschen"
+  >🗑</button>
+</div>

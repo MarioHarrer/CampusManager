@@ -1,1 +1,29 @@
-<p>football-view works!</p>
+<div class="match-card" [class.live]="isLive" [class.finished]="isFinished">
+  <header class="match-header">
+    <span class="competition">{{ match.competition }}</span>
+    <span class="status" [class.live]="isLive">{{ statusLabel }}</span>
+  </header>
+
+  <div class="teams">
+    <div class="team">
+      <span class="crest">{{ match.homeTeam.crest }}</span>
+      <span class="name">{{ match.homeTeam.name }}</span>
+    </div>
+
+    <div class="score">
+      <ng-container *ngIf="match.homeTeam.score !== null && match.awayTeam.score !== null; else kickoffTpl">
+        <span>{{ match.homeTeam.score }}</span>
+        <span class="sep">–</span>
+        <span>{{ match.awayTeam.score }}</span>
+      </ng-container>
+      <ng-template #kickoffTpl>
+        <span class="kickoff">vs</span>
+      </ng-template>
+    </div>
+
+    <div class="team">
+      <span class="crest">{{ match.awayTeam.crest }}</span>
+      <span class="name">{{ match.awayTeam.name }}</span>
+    </div>
+  </div>
+</div>

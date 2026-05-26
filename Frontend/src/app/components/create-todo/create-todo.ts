@@ -1,52 +1,73 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TodoService } from '../../services/todo.service';
-import { CreateTodo } from '../../services/todo.model';
+import { TodoType } from '../../services/models';
+import { DataPickerComponent } from '../data-picker/data-picker';
 
 @Component({
   selector: 'app-create-todo',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, DataPickerComponent],
   templateUrl: './create-todo.html',
-  styleUrl: './create-todo.css',
+  styleUrl: './create-todo.css'
 })
-export class CreateTodoComponent {
+export class CreateTodoComponent implements OnInit {
   private todoService = inject(TodoService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
-  // Modell, das ans Formular gebunden ist
-  todo: CreateTodo = {
-    name: '',
+  // Formularmodell.
+  form = {
+    title: '',
     description: '',
-    date: new Date().toISOString().substring(0, 10), // heute als yyyy-mm-dd
+    date: '' as string,
+    time: '',
+    type: 'blue' as TodoType,
   };
 
-  saving = false;
-  errorMessage = '';
+  submitted = false;
+
+  readonly typeOptions: { value: TodoType; label: string; color: string }[] = [
+    { value: 'blue',   label: 'Schule',   color: '#4a90e2' },
+    { value: 'orange', label: 'Lernen',   color: '#f5a623' },
+    { value: 'red',    label: 'Wichtig',  color: '#e25c5c' },
+    { value: 'green',  label: 'Privat',   color: '#5cb85c' },
+  ];
+
+  ngOnInit() {
+    // Optional: Datum aus Query-Param (wenn User im Kalender auf einen Tag klickt).
+    const prefill = this.route.snapshot.queryParamMap.get('date');
+    if (prefill) {
+      this.form.date = prefill;
+    } else {
+      this.form.date = new Date().toISOString().slice(0, 10);
+    }
+  }
+
+  setType(type: TodoType) {
+    this.form.type = type;
+  }
 
   save() {
-    if (!this.todo.name || this.todo.name.length < 3) {
-      this.errorMessage = 'Name muss mindestens 3 Zeichen lang sein.';
+    this.submitted = true;
+    if (!this.form.title.trim() || !this.form.date) {
       return;
     }
 
-    this.saving = true;
-    this.errorMessage = '';
-
-    this.todoService.create(this.todo).subscribe({
-      next: () => {
-        this.saving = false;
-        // Zurück zum Kalender, der lädt dann neu
-        this.router.navigate(['/calender']);
-      },
-      error: (err) => {
-        this.saving = false;
-        this.errorMessage =
-          'Speichern fehlgeschlagen. Läuft das Backend auf Port 3000?';
-        console.error(err);
-      },
+    this.todoService.addTodo({
+      title: this.form.title.trim(),
+      description: this.form.description.trim(),
+      date: this.form.date,
+      time: this.form.time,
+      type: this.form.type,
     });
+
+    this.router.navigate(['/calender']);
+  }
+
+  cancel() {
+    this.router.navigate(['/calender']);
   }
 }

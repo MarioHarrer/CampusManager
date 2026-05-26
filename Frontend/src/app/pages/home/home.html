@@ -1,18 +1,115 @@
 <div class="home-grid">
-  <div class="today-sidebar">
-    <h2>Today</h2>
-    <div class="weather-info">
-      <span class="temp">-8°</span>
-      <p>Snowy</p>
-      <p class="location">California, Los Angeles</p>
-    </div>
-  </div>
 
-  <div class="todo-previews">
-    <div class="preview-card" *ngFor="let i of [1,2,3,4]">
-      <span class="card-date">Day, Month</span>
-      <h3>ToDo Title {{i}}</h3>
-      <p>Description for task {{i}}...</p>
+  <!-- LINKS: Wetter-Sidebar -->
+  <aside class="today-sidebar">
+    <h2>Today</h2>
+
+    <div class="weather-info" *ngIf="weather(); else loadingTpl">
+      <div class="weather-icon">{{ weather()!.icon }}</div>
+      <div class="temp">
+        {{ weather()!.temperature }}<span class="deg">°</span>
+      </div>
+      <p class="condition">{{ weather()!.condition }}</p>
+      <p class="location">{{ weather()!.locationName }}</p>
+
+      <div class="weather-details">
+        <div>
+          <span class="label">Gefühlt</span>
+          <span class="value">{{ weather()!.feelsLike }}°</span>
+        </div>
+        <div>
+          <span class="label">Wind</span>
+          <span class="value">{{ weather()!.windSpeed }} km/h</span>
+        </div>
+        <div>
+          <span class="label">Luftf.</span>
+          <span class="value">{{ weather()!.humidity }}%</span>
+        </div>
+      </div>
+
+      <p class="updated">Aktualisiert {{ formatUpdatedAt(weather()!.updatedAt) }}</p>
     </div>
+
+    <ng-template #loadingTpl>
+      <p class="loading">Wetter wird geladen…</p>
+    </ng-template>
+  </aside>
+
+  <!-- RECHTS: Content Bereich -->
+  <div class="main-content">
+
+    <!-- Heutige ToDos -->
+    <section class="section">
+      <div class="section-header">
+        <h3>Heutige Aufgaben</h3>
+        <a routerLink="/calender" class="link">Alle im Kalender ansehen →</a>
+      </div>
+
+      <div class="today-list" *ngIf="todayTodos().length > 0; else emptyToday">
+        <div
+          *ngFor="let todo of todayTodos()"
+          class="today-item"
+          [attr.data-type]="todo.type"
+        >
+          <label class="checkbox-wrap">
+            <input
+              type="checkbox"
+              [checked]="todo.done"
+              (change)="toggleDone(todo)"
+            />
+            <span class="checkmark"></span>
+          </label>
+
+          <div class="item-body">
+            <div class="item-title">{{ todo.title }}</div>
+            <div class="item-desc" *ngIf="todo.description">{{ todo.description }}</div>
+          </div>
+
+          <div class="item-time" *ngIf="todo.time">{{ todo.time }}</div>
+        </div>
+      </div>
+
+      <ng-template #emptyToday>
+        <div class="empty-state">
+          <span>🎉 Keine Aufgaben für heute — genieß den Tag!</span>
+        </div>
+      </ng-template>
+    </section>
+
+    <!-- Anstehende ToDos als Preview-Cards -->
+    <section class="section" *ngIf="upcomingTodos().length > 0">
+      <div class="section-header">
+        <h3>Demnächst</h3>
+      </div>
+
+      <div class="todo-previews">
+        <div
+          class="preview-card"
+          *ngFor="let todo of upcomingTodos()"
+          [attr.data-type]="todo.type"
+        >
+          <span class="card-date">{{ formatDate(todo.date) }}</span>
+          <h4>{{ todo.title }}</h4>
+          <p>{{ todo.description }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Erledigt-Liste (Done-Archiv) -->
+    <section class="section" *ngIf="doneTodos().length > 0">
+      <div class="section-header">
+        <h3>Erledigt</h3>
+        <span class="muted">bleibt hier, bis du löschst</span>
+      </div>
+
+      <div class="done-list">
+        <div class="done-item" *ngFor="let todo of doneTodos()">
+          <span class="done-title">{{ todo.title }}</span>
+          <span class="done-date">{{ formatDate(todo.date) }}</span>
+          <button class="btn-restore" (click)="restoreDone(todo)" title="Doch nicht fertig">↺</button>
+          <button class="btn-delete" (click)="deleteDone(todo)" title="Endgültig löschen">🗑</button>
+        </div>
+      </div>
+    </section>
   </div>
 </div>

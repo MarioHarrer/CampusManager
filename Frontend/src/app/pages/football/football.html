@@ -1,30 +1,50 @@
-<div class="football-card">
-  <h2>Standings</h2>
-  <table class="standings-table">
-    <thead>
-    <tr>
-      <th>Club</th>
-      <th>W</th>
-      <th>D</th>
-      <th>L</th>
-      <th>Pts</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td>Chelsea FC</td>
-      <td>14</td>
-      <td>3</td>
-      <td>1</td>
-      <td>35</td>
-    </tr>
-    <tr>
-      <td>Manchester City</td>
-      <td>13</td>
-      <td>3</td>
-      <td>2</td>
-      <td>32</td>
-    </tr>
-    </tbody>
-  </table>
+<div class="football-page">
+
+  <!-- Tabelle -->
+  <app-football-leaderboard
+    [standings]="standings()"
+    title="Premier League"
+  ></app-football-leaderboard>
+
+  <!-- Match-Sektion mit Tabs -->
+  <section class="matches-section">
+    <div class="tabs">
+      <button
+        class="tab"
+        [class.active]="activeTab === 'today'"
+        (click)="setTab('today')"
+      >
+        Heutige Spiele
+        <span class="count" *ngIf="todayMatches().length">{{ todayMatches().length }}</span>
+      </button>
+      <button
+        class="tab"
+        [class.active]="activeTab === 'recent'"
+        (click)="setTab('recent')"
+      >
+        Letzte Ergebnisse
+      </button>
+    </div>
+
+    <!-- Heutige Spiele -->
+    <div class="match-grid" *ngIf="activeTab === 'today'">
+      <ng-container *ngIf="todayMatches().length > 0; else noToday">
+        <app-football-view
+          *ngFor="let m of todayMatches()"
+          [match]="m"
+        ></app-football-view>
+      </ng-container>
+      <ng-template #noToday>
+        <div class="empty-state">Heute finden keine Spiele statt.</div>
+      </ng-template>
+    </div>
+
+    <!-- Letzte Ergebnisse -->
+    <div class="match-grid" *ngIf="activeTab === 'recent'">
+      <app-football-view
+        *ngFor="let m of recentMatches()"
+        [match]="m"
+      ></app-football-view>
+    </div>
+  </section>
 </div>

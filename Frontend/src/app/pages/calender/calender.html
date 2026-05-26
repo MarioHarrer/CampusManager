@@ -1,13 +1,14 @@
-<div class="calendar-page-container">
+<div class="calendar-page-container" [class.with-sidebar]="sidebarOpen">
   <div class="calendar-main-card">
 
     <header class="calendar-nav">
       <div class="month-selector">
-        <button (click)="changeMonth(-1)" class="nav-arrow">&lt;</button>
-        <h2>{{ displayDate | date:'MMM, yyyy' }}</h2>
-        <button (click)="changeMonth(1)" class="nav-arrow">&gt;</button>
+        <button (click)="changeMonth(-1)" class="nav-arrow" title="Vorheriger Monat">‹</button>
+        <h2>{{ displayDate | date:'MMMM yyyy' }}</h2>
+        <button (click)="changeMonth(1)" class="nav-arrow" title="Nächster Monat">›</button>
+        <button (click)="goToToday()" class="btn-today">Heute</button>
       </div>
-      <button class="add-todo-btn" routerLink="create">Add ToDo</button>
+      <button class="add-todo-btn" routerLink="create">+ Add ToDo</button>
     </header>
 
     <div class="weekday-grid">
@@ -15,25 +16,32 @@
     </div>
 
     <div class="calendar-grid">
-      <div *ngFor="let day of days"
-           class="day-cell"
-           [class.not-current]="!isCurrentMonth(day)"
-           [class.today]="isToday(day)">
-
+      <div
+        *ngFor="let day of days"
+        class="day-cell"
+        [class.not-current]="!isCurrentMonth(day)"
+        [class.today]="isToday(day)"
+        (click)="createForDay(day)"
+      >
         <span class="day-number">{{ day.getDate() }}</span>
 
         <div class="cell-todos">
-          <div *ngFor="let todo of getTodosForDay(day)"
-               class="todo-pill"
-               [routerLink]="['edit', todo.id]">
-            {{ todo.name }}
+          <div
+            *ngFor="let todo of getTodosForDay(day)"
+            class="todo-pill"
+            [attr.data-type]="todo.type"
+            (click)="editTodo(todo, $event)"
+            [title]="todo.title + (todo.time ? ' — ' + todo.time : '')"
+          >
+            <span class="pill-time" *ngIf="todo.time">{{ todo.time }}</span>
+            <span class="pill-title">{{ todo.title }}</span>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <aside class="side-panel">
+  <aside class="side-panel" *ngIf="sidebarOpen">
     <router-outlet></router-outlet>
   </aside>
 </div>

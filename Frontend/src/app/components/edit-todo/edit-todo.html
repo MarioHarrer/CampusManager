@@ -1,45 +1,64 @@
-<div class="edit-card">
-  <header class="edit-header">
-    <span class="label">Bearbeitungsmodus</span>
-    <h3>Aufgabe editieren</h3>
+<div class="todo-card" *ngIf="!notFound; else notFoundTpl">
+  <header class="card-header">
+    <div>
+      <span class="label">Bearbeitungsmodus</span>
+      <h3>Aufgabe editieren</h3>
+    </div>
+    <button class="close-btn" (click)="cancel()" type="button" title="Schließen">✕</button>
   </header>
 
-  <p *ngIf="loading">Lade…</p>
-
-  <div class="edit-form" *ngIf="!loading">
+  <div class="form-body">
     <div class="form-group">
-      <label>Titel</label>
-      <input
-        type="text"
-        [(ngModel)]="todo.name"
-        name="name"
-        placeholder="Titel eingeben"
-      />
+      <label>Titel *</label>
+      <input type="text" [(ngModel)]="form.title" placeholder="Titel" />
     </div>
 
     <div class="form-group">
-      <label>Datum</label>
-      <input type="date" [(ngModel)]="todo.date" name="date" />
+      <label>Datum *</label>
+      <app-data-picker
+        [value]="form.date"
+        (valueChange)="form.date = $event"
+      ></app-data-picker>
+    </div>
+
+    <div class="form-group">
+      <label>Uhrzeit</label>
+      <input type="time" [(ngModel)]="form.time" class="time-input" />
+    </div>
+
+    <div class="form-group">
+      <label>Kategorie</label>
+      <div class="type-picker">
+        <button
+          *ngFor="let opt of typeOptions"
+          type="button"
+          class="type-chip"
+          [class.active]="form.type === opt.value"
+          [style.--chip-color]="opt.color"
+          (click)="setType(opt.value)"
+        >
+          <span class="dot" [style.background]="opt.color"></span>
+          {{ opt.label }}
+        </button>
+      </div>
     </div>
 
     <div class="form-group">
       <label>Beschreibung</label>
-      <textarea
-        [(ngModel)]="todo.description"
-        name="description"
-        rows="5"
-        placeholder="Was ist zu tun?"
-      ></textarea>
+      <textarea [(ngModel)]="form.description" rows="4" placeholder="Was ist zu tun?"></textarea>
     </div>
   </div>
 
-  <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
-
-  <footer class="edit-footer">
-    <button class="btn-cancel" routerLink="/calender">Abbrechen</button>
-    <button class="btn-delete" (click)="deleteTodo()">Löschen</button>
-    <button class="btn-save" (click)="saveChanges()" [disabled]="saving">
-      {{ saving ? 'Speichert…' : 'Speichern' }}
-    </button>
+  <footer class="card-footer">
+    <button class="btn-delete" type="button" (click)="delete()" title="Endgültig löschen">🗑</button>
+    <button class="btn-done" type="button" (click)="markDone()" title="Als erledigt markieren">✓ Erledigt</button>
+    <button class="btn-save" type="button" (click)="save()">Speichern</button>
   </footer>
 </div>
+
+<ng-template #notFoundTpl>
+  <div class="not-found">
+    <h3>ToDo nicht gefunden</h3>
+    <button class="btn-save" (click)="cancel()">Zurück zum Kalender</button>
+  </div>
+</ng-template>

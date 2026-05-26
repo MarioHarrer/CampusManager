@@ -1,20 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { DataPickerComponent } from './data-picker';
 
-import { DataPicker } from './data-picker';
-
-describe('DataPicker', () => {
-  let component: DataPicker;
-  let fixture: ComponentFixture<DataPicker>;
+describe('DataPickerComponent', () => {
+  let component: DataPickerComponent;
+  let fixture: ComponentFixture<DataPickerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DataPicker]
-    })
-    .compileComponents();
+      imports: [DataPickerComponent]
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(DataPicker);
+    fixture = TestBed.createComponent(DataPickerComponent);
     component = fixture.componentInstance;
-    await fixture.whenStable();
   });
 
   it('should create', () => {
