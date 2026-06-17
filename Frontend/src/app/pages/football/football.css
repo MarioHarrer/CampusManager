@@ -70,3 +70,23 @@
   border-radius: 10px;
   font-size: 0.9rem;
 }
+
+/* ---------- Responsive: Handy ---------- */
+@media (max-width: 768px) {
+  .football-page {
+    gap: 20px;
+  }
+  .matches-section {
+    padding: 16px;
+  }
+  .match-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .tab {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+  }
+}

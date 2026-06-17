@@ -345,3 +345,61 @@
     min-height: auto;
   }
 }
+
+/* ---------- Responsive: Handy ---------- */
+@media (max-width: 768px) {
+  .home-grid {
+    gap: 20px;
+  }
+  .today-sidebar {
+    padding: 28px 24px;
+  }
+  .main-content {
+    gap: 28px;
+  }
+}
+
+@media (max-width: 600px) {
+  .today-sidebar {
+    padding: 24px 20px;
+  }
+  .weather-icon,
+  .temp {
+    font-size: 3.6rem;
+  }
+  .temp .deg {
+    font-size: 2rem;
+  }
+  .section-header {
+    flex-wrap: wrap;
+    gap: 4px 12px;
+  }
+  .today-item {
+    gap: 10px;
+    padding: 12px;
+  }
+  .todo-previews {
+    grid-template-columns: 1fr;
+  }
+
+  /* Erledigt-Zeile: Datum unter den Titel, Buttons rechts daneben */
+  .done-item {
+    grid-template-columns: 1fr auto auto;
+    grid-template-areas:
+      "title restore delete"
+      "date  restore delete";
+    row-gap: 2px;
+    column-gap: 8px;
+  }
+  .done-title { grid-area: title; }
+  .done-date  { grid-area: date; }
+  .btn-restore { grid-area: restore; }
+  .btn-delete  { grid-area: delete; }
+}
+
+/* Kurze Querformat-Screens: Wetterkarte nicht kuenstlich hoch ziehen */
+@media (orientation: landscape) and (max-height: 500px) {
+  .today-sidebar {
+    min-height: auto;
+  }
+}

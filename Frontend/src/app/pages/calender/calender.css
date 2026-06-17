@@ -223,3 +223,91 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- Responsive: Handy ---------- */
+@media (max-width: 768px) {
+  .calendar-main-card {
+    padding: 16px;
+  }
+  .calendar-nav {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .month-selector {
+    gap: 8px;
+  }
+  .month-selector h2 {
+    min-width: auto;
+    margin: 0 6px;
+    font-size: 1.15rem;
+  }
+  .add-todo-btn {
+    margin-left: auto;
+  }
+  .calendar-grid {
+    grid-auto-rows: minmax(84px, auto);
+  }
+  .day-cell {
+    min-height: 84px;
+    padding: 6px;
+  }
+}
+
+@media (max-width: 600px) {
+  .calendar-main-card {
+    padding: 12px;
+  }
+
+  /* Monats-Navigation in einer Zeile, Add-Button volle Breite darunter */
+  .calendar-nav {
+    justify-content: space-between;
+  }
+  .month-selector {
+    flex: 1;
+  }
+  .btn-today {
+    margin-left: 6px;
+    padding: 7px 12px;
+  }
+  .add-todo-btn {
+    order: 3;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  /* Kalenderzellen kompakter */
+  .calendar-grid {
+    grid-auto-rows: minmax(70px, auto);
+  }
+  .day-cell {
+    min-height: 70px;
+    padding: 4px;
+    gap: 2px;
+  }
+  .day-number {
+    font-size: 0.72rem;
+  }
+  .today .day-number {
+    width: 22px;
+    height: 22px;
+  }
+  .weekday-label {
+    font-size: 0.6rem;
+  }
+
+  /* ToDo-Pills: Zeit ueber Titel, beide lesbar trotz schmaler Spalte */
+  .todo-pill {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: 2px 4px;
+    border-left-width: 2px;
+  }
+  .pill-time {
+    font-size: 0.58rem;
+  }
+  .pill-title {
+    font-size: 0.62rem;
+    max-width: 100%;
+  }
+}

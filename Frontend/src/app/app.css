@@ -61,3 +61,55 @@
   min-height: calc(100vh - 60px);
   padding: 40px;
 }
+
+/* ====================== RESPONSIVE / MOBILE ====================== */
+
+/* Tablets & groessere Handys (quer): Abstaende verkleinern, Navbar einzeilig */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 16px;
+  }
+  .navbar-container {
+    column-gap: 14px;
+  }
+  .nav-menu {
+    gap: 18px;
+  }
+  .nav-menu a {
+    font-size: 0.95rem;
+  }
+  .content-area {
+    padding: 20px 16px;
+  }
+}
+
+/* Handys (hochkant): Navigationslinks ruecken in eine eigene, zentrierte Zeile */
+@media (max-width: 600px) {
+  .navbar {
+    height: auto;
+    padding: 10px 14px;
+  }
+  .navbar-container {
+    flex-wrap: wrap;
+    row-gap: 10px;
+  }
+  .brand {
+    font-size: 1rem;
+  }
+  .nav-menu {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    gap: 26px;
+  }
+  .content-area {
+    padding: 16px 12px;
+  }
+}
+
+/* Sehr schmale Geraete */
+@media (max-width: 360px) {
+  .nav-menu {
+    gap: 18px;
+  }
+}

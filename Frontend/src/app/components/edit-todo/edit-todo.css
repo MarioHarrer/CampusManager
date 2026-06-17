@@ -184,3 +184,20 @@ textarea {
   margin: 0 0 20px;
   color: #555;
 }
+
+/* ---------- Responsive: Handy ---------- */
+@media (max-width: 600px) {
+  .todo-card {
+    padding: 18px;
+  }
+  .time-input {
+    width: 100%;
+  }
+  .card-footer {
+    gap: 6px;
+  }
+  .btn-done,
+  .btn-save {
+    padding: 11px 6px;
+  }
+}

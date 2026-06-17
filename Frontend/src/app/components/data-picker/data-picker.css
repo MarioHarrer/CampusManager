@@ -188,3 +188,12 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* ---------- Responsive: Handy ---------- */
+@media (max-width: 600px) {
+  .datepicker-wrap:not(.inline) .picker-panel {
+    min-width: 0;
+    left: 0;
+    right: 0;
+  }
+}

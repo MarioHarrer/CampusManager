@@ -72,12 +72,32 @@
   padding-left: 18px;
 }
 
-@media (max-width: 700px) {
+/* ---------- Responsive: Handy ---------- */
+@media (max-width: 768px) {
+  .leaderboard {
+    padding: 16px;
+  }
   .standings-table {
     font-size: 0.85rem;
   }
-  .standings-table thead th:nth-child(n+7),
-  .standings-table tbody td:nth-child(n+7) {
+  .standings-table thead th {
+    padding: 8px 6px;
+  }
+  /* "Last 5"-Spalte ausblenden (Kopf) - Werte werden in der Karte ausgeblendet */
+  .standings-table thead th:nth-child(9) {
     display: none;
+  }
+}
+
+@media (max-width: 520px) {
+  /* Sehr schmal: zusaetzlich W/D/L ausblenden - Pts bleibt sichtbar */
+  .standings-table thead th:nth-child(4),
+  .standings-table thead th:nth-child(5),
+  .standings-table thead th:nth-child(6) {
+    display: none;
+  }
+  .standings-table thead th {
+    padding: 8px 4px;
+    font-size: 0.62rem;
   }
 }

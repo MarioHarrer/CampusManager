@@ -95,3 +95,48 @@
 .result-dot[data-result="W"] { background: #5cb85c; }
 .result-dot[data-result="D"] { background: #f5a623; }
 .result-dot[data-result="L"] { background: #e25c5c; }
+
+/* ---------- Responsive: Handy (Spalten passend zum Tabellenkopf ausblenden) ---------- */
+@media (max-width: 768px) {
+  .standings-row td {
+    padding: 10px 6px;
+  }
+  .team-cell {
+    min-width: 0;
+    gap: 8px;
+  }
+  /* "Last 5" ausblenden */
+  .standings-row td:nth-child(9) {
+    display: none;
+  }
+}
+
+@media (max-width: 520px) {
+  /* W / D / L ausblenden - Pts (Spalte 8) bleibt sichtbar */
+  .standings-row td:nth-child(4),
+  .standings-row td:nth-child(5),
+  .standings-row td:nth-child(6) {
+    display: none;
+  }
+  .standings-row td {
+    padding: 9px 4px;
+  }
+  .num {
+    width: auto;
+    font-size: 0.82rem;
+  }
+  .team-name {
+    font-size: 0.82rem;
+  }
+  .crest {
+    font-size: 1.1rem;
+  }
+  .pos {
+    width: 34px;
+  }
+  .pos-badge {
+    width: 22px;
+    height: 22px;
+    font-size: 0.72rem;
+  }
+}
