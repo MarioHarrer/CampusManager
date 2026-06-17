@@ -22,13 +22,7 @@ import { BASE_PATH } from './api';
 // generierten OpenAPI-Services Pfade als `${basePath}/todos` zusammenbauen.
 const BACKEND_URL = 'http://localhost:3000';
 
-/**
- * Verhindert dass der Browser/Angular gecachte Antworten (304 Not Modified)
- * verwendet, was bei den generierten OpenAPI-Services dazu führt, dass
- * Folge-Requests leer im Frontend ankommen. Wir setzen Cache-Header explizit
- * auf "no-cache" — und hängen einen Cache-Buster-Query-Param an GETs an, damit
- * die URL für den Browser-Cache immer neu wirkt.
- */
+
 function noCacheInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) {
   if (!req.url.startsWith(BACKEND_URL)) {
     return next(req);

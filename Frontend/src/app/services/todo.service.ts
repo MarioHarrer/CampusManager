@@ -7,21 +7,7 @@ import type {
 } from '../api';
 import { CreateTodo, Todo, TodoType, UpdateTodo } from './models';
 
-/**
- * Signal-basierter ToDo-Store, der intern die generierten OpenAPI-Klassen
- * verwendet, um mit dem NestJS-Backend zu reden.
- *
- * Hintergrund: Das Frontend-Modell (siehe ./models.ts) hat Felder wie `title`,
- * `time`, `type` (Farbe) und `done`. Das Backend speichert demgegenüber nur
- * `name`, `description`, `date`, `startTime`, `endTime`. Damit das UI
- * unverändert weiterlaufen kann, persistieren wir die UI-spezifischen Felder
- * (`type`, `done`) als Prefix in der Description in der Form:
- *
- *     [meta:type=blue;done=0] Hier kommt die echte Description hin
- *
- * Beim Lesen wird das wieder geparst. Das ist robust gegen alte Daten
- * (Default: type=blue, done=false) und braucht keine Backend-Änderung.
- */
+
 @Injectable({ providedIn: 'root' })
 export class TodoService {
   private api = inject(ApiTodosService);
@@ -48,9 +34,6 @@ export class TodoService {
     this.reload();
   }
 
-  // -------------------------------------------------------------------------
-  // Public API (wird von den Components benutzt)
-  // -------------------------------------------------------------------------
 
   /** Lädt alle ToDos vom Backend neu. */
   reload(): void {
